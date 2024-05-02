@@ -3,6 +3,8 @@ import 'package:pokeshop/models/cart.dart';
 import 'package:pokeshop/models/product_list.dart';
 import 'package:pokeshop/pages/cart_page.dart';
 import 'package:pokeshop/pages/orders_page.dart';
+import 'package:pokeshop/pages/products_page.dart';
+import 'package:pokeshop/utils/app_routes.dart';
 import 'package:pokeshop/widgets/product_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
@@ -22,7 +24,7 @@ class ProductViewPage extends StatefulWidget {
 class _ProductViewPageState extends State<ProductViewPage> {
   int _currentIndex = 2;
   List<Widget> body = [
-    const Icon(Icons.search),
+    const ProductsPage(),
     const Icon(Icons.edit),
     const ProductListView(),
     const CartPage(),
@@ -140,6 +142,13 @@ class _ProductViewPageState extends State<ProductViewPage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        onPressed: () {
+          Navigator.of(context).pushNamed(AppRoutes.PRODUCT_FORM);
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

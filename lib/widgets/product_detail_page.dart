@@ -157,7 +157,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           size: 30,
                           color: Colors.black,
                         ),
-                        onPressed: widget.product.stock == 0
+                        onPressed: cart.items.containsKey(widget.product.id)
                             ? () {
                                 Navigator.of(context).pop();
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -165,7 +165,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     duration: Duration(seconds: 1),
                                     elevation: 5,
                                     content:
-                                        Text('Item Esgotado'),
+                                        Text('Item já está no carrinho'),
                                     behavior: SnackBarBehavior.floating,
                                   ),
                                 );
