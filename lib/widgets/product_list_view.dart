@@ -5,13 +5,12 @@ import 'package:pokeshop/widgets/product_list_item.dart';
 import 'package:provider/provider.dart';
 
 class ProductListView extends StatelessWidget {
-  final bool showFavoriteOnly;
-  const ProductListView(this.showFavoriteOnly, {super.key});
+  const ProductListView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final ProductList provider = Provider.of<ProductList>(context); //Atribuindo caminho de ProductList para provider
-    final List<Product> loadedProducts = showFavoriteOnly ? provider.favoriteItems : provider.items; // produtos recebidos pelo getter items
+    final List<Product> loadedProducts = provider.items; // produtos recebidos pelo getter items
 
     return ListView.builder(
       itemCount: loadedProducts.length,

@@ -12,8 +12,6 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,7 +55,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               setState(() {
                 widget.product.toggleFavorite();
               });
-              
             },
             icon: Icon(
               size: 30,
@@ -112,14 +109,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  void _showAddedToCartMessage(BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text('Item adicionado ao carrinho'),
-      duration: Duration(seconds: 1),
-    ),
-  );
-}
   // Widget Área de compra
   Widget _buildPurchaseArea() {
     final Cart cart = Provider.of<Cart>(context);
@@ -168,10 +157,32 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           size: 30,
                           color: Colors.black,
                         ),
-                        onPressed: () {
-                          cart.addItem(widget.product);
-                          _showAddedToCartMessage(context);
-                        },
+                        onPressed: widget.product.stock == 0
+                            ? () {
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    duration: Duration(seconds: 1),
+                                    elevation: 5,
+                                    content:
+                                        Text('Item Esgotado'),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              }
+                            : () {
+                                cart.addItem(widget.product);
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    duration: Duration(seconds: 1),
+                                    elevation: 5,
+                                    content:
+                                        Text('Item Adicionado ao carrinho'),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              },
                       ),
                     ),
                   ),
@@ -212,7 +223,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         widget.product.description,
                         textAlign: TextAlign.center,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

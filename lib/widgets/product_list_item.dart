@@ -39,7 +39,7 @@ class ProductListItem extends StatelessWidget {
                 product.name,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              subtitle: Text(product.description),
+              subtitle: Text('${product.description}\n${product.stock}x '),
               trailing: Text(
                 "PokeDollar\n\$${product.price.toStringAsFixed(2)}",
                 textAlign: TextAlign.end,

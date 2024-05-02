@@ -4,7 +4,8 @@ class CartItem {
   final String name;
   final int quantity;
   final double price;
+  final String imgUrl;
 
-  CartItem({required this.id, required this.productId, required this.name, required this.quantity, required this.price});
+  CartItem({required this.id, required this.productId, required this.name, required this.quantity, required this.price, required this.imgUrl,});
   
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokeshop/models/cart.dart';
 import 'package:pokeshop/models/cart_item.dart';
+import 'package:pokeshop/models/product_list.dart';
 import 'package:provider/provider.dart';
 
 class CartList extends StatelessWidget {
@@ -9,6 +10,9 @@ class CartList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context, listen: false);// produtos recebidos pelo getter items
+    final productList = Provider.of<ProductList>(context,listen: false);
+        
     return Dismissible(
       key: ValueKey(cartItem.id),
       direction: DismissDirection.endToStart,
@@ -26,24 +30,34 @@ class CartList extends StatelessWidget {
       child: Card(
         child: ListTile(
           leading: CircleAvatar(
-            child: Padding(
-              padding: const EdgeInsets.all(3),
-              child: FittedBox(
-                child: Text('\$${cartItem.price.toStringAsFixed(2)}'), // aqui
-              ),
-            ),
+            backgroundImage: NetworkImage(cartItem.imgUrl),
           ),
           title: Text(cartItem.name),
           subtitle: Text(
               'Total: R\$ ${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
-          trailing: Text('${cartItem.quantity}x'),
+          trailing: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                onPressed: () {
+                  cart.removQuantity(cartItem.productId, cartItem.quantity);
+                },
+                icon: const Icon(Icons.remove),
+              ),
+              Text(cartItem.quantity.toString()),
+              IconButton(
+                onPressed: () {
+                  productList.stockMax(cartItem.productId) > cartItem.quantity ? cart.addQuantity(cartItem.productId) : null;
+                },
+                icon: const Icon(Icons.add),
+              ),
+            ],
+          ),
         ),
       ),
       onDismissed: (_) {
-        Provider.of<Cart>(
-          context,
-          listen: false,
-        ).removeItem(cartItem.productId);
+        cart.removeItem(cartItem.productId);
       },
       confirmDismiss: (_) {
         return showDialog<bool>(

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pokeshop/models/cart.dart';
 import 'package:pokeshop/models/order_list.dart';
 import 'package:pokeshop/models/product_list.dart';
-import 'package:pokeshop/pages/cart_page.dart';
-import 'package:pokeshop/pages/orders_page.dart';
 import 'package:pokeshop/pages/product_view_page.dart';
 import 'package:pokeshop/utils/app_routes.dart';
 import 'package:provider/provider.dart';
@@ -59,8 +57,6 @@ class Myapp extends StatelessWidget {
         routes: {
           // Definçoes de rotas na hierarquia
           AppRoutes.HOME:(context) => const ProductViewPage(),
-          AppRoutes.CART:(context) => const CartPage(),
-          AppRoutes.ORDER:(context) => const OrdersPage(),
         },
         debugShowCheckedModeBanner: false,
       ),
